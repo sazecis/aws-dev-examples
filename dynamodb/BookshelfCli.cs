@@ -10,7 +10,14 @@ using McMaster.Extensions.CommandLineUtils;
 namespace BookshelfCli
 {
     [Command(Name = "bookshelf", Description = "CLI tool for managing Bookshelf table in DynamoDB")]
-    [Subcommand(typeof(CreateTableCommand), typeof(DeleteTableCommand))]
+    [Subcommand(
+        typeof(CreateTableCommand),
+        typeof(DeleteTableCommand),
+        typeof(InsertItemCommand),
+        typeof(ListItemsCommand),
+        typeof(QueryAuthorCommand),
+        typeof(UpdateItemCommand),
+        typeof(DeleteItemCommand))]
     public class BookshelfCli
     {
 
