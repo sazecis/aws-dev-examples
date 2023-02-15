@@ -14,6 +14,7 @@ public class ListItemsCommand
     [Option(Description = "AWS region where the table exists", ShortName = "r")]
     public string Region { get; set; }
 
+    [Obsolete]
     public async Task<int> OnExecuteAsync(IConsole console)
     {
         try

@@ -30,6 +30,7 @@ public class UpdateItemCommand
     [Option(Description = "New description of the book", ShortName = "d", LongName = "new-description", ValueName = "NEW_DESCRIPTION")]
     public string NewDescription { get; set; }
 
+    [Obsolete]
     public async Task<int> OnExecuteAsync(IConsole console)
     {
         try

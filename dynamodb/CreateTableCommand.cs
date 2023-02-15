@@ -13,7 +13,7 @@ namespace BookshelfCli
     [Command(Name = "create", Description = "Create the Bookshelf table in DynamoDB")]
     public class CreateTableCommand
     {
-
+        [Obsolete]
         public async Task<int> OnExecuteAsync(IConsole console)
         {
             try

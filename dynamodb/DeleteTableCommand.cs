@@ -12,6 +12,7 @@ namespace BookshelfCli
     [Command(Name = "delete", Description = "Delete the Bookshelf table from DynamoDB")]
     public class DeleteTableCommand
     {
+        [Obsolete]
         public async Task<int> OnExecuteAsync(IConsole console)
         {
             try

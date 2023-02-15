@@ -20,6 +20,7 @@ public class QueryAuthorCommand
     [Required]
     public string Author { get; set; }
 
+    [Obsolete]
     public async Task<int> OnExecuteAsync(IConsole console)
     {
         try

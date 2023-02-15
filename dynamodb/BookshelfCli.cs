@@ -23,7 +23,7 @@ namespace BookshelfCli
 
         public static async Task<int> Main(string[] args) => await CommandLineApplication.ExecuteAsync<BookshelfCli>(args);
 
-        private async Task<int> OnExecuteAsync(CommandLineApplication app, IConsole console)
+        private int OnExecute(CommandLineApplication app, IConsole console)
         {
             console.WriteLine("Please specify a subcommand.");
             app.ShowHelp();

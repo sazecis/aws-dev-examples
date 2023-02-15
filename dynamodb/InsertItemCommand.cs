@@ -31,6 +31,7 @@ public class InsertItemCommand
     [Option(Description = "Description of the book", ShortName = "d", LongName = "description", ValueName = "DESCRIPTION")]
     public string Description { get; set; }
 
+    [Obsolete]
     public async Task<int> OnExecuteAsync(IConsole console)
     {
         try

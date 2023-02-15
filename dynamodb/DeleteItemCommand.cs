@@ -23,6 +23,7 @@ public class DeleteItemCommand
     [Required]
     public string Title { get; set; }
 
+    [Obsolete]
     public async Task<int> OnExecuteAsync(IConsole console)
     {
         try
