@@ -1,4 +1,4 @@
 x_old
 
-dynamodb/bin/
-dynamodb/obj/
+**/bin/
+**/obj/
