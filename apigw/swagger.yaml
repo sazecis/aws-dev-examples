@@ -1,0 +1,141 @@
+swagger: "2.0"
+info:
+  title: Bookshelf API
+  version: "1.0"
+  description: An API for managing a bookshelf.
+basePath: /v1
+schemes:
+  - https
+paths:
+  /books:
+    get:
+      summary: List all books
+      description: Returns a list of all books in the bookshelf.
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Book"
+        "500":
+          description: Internal Server Error
+    post:
+      summary: Add a new book
+      description: Adds a new book to the bookshelf.
+      parameters:
+        - name: book
+          in: body
+          description: The book to add to the bookshelf.
+          required: true
+          schema:
+            $ref: "#/definitions/NewBook"
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+  /books/{id}:
+    get:
+      summary: Get a book by ID
+      description: Returns the book with the specified ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book to retrieve.
+          required: true
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Book"
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    put:
+      summary: Update a book by ID
+      description: Updates the book with the specified ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book to update.
+          required: true
+          type: string
+        - name: book
+          in: body
+          description: The updated book information.
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateBook"
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    delete:
+      summary: Delete a book by ID
+      description: Deletes the book with the specified ID.
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the book to delete.
+          required: true
+          type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+definitions:
+  Book:
+    type: object
+    properties:
+      author:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      description:
+        type: string
+    required:
+      - author
+      - title
+      - type
+  NewBook:
+    type: object
+    properties:
+      author:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      description:
+        type: string
+    required:
+      - author
+      - title
+      - type
+  UpdateBook:
+    type: object
+    properties:
+      author:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      description:
+        type: string
+    required:
+      - author
+      - title
