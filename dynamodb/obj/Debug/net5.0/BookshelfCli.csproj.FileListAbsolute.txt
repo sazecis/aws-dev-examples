@@ -1,0 +1,5 @@
+F:\aws\ppt\dev\demo\dynamodb\obj\Debug\net5.0\BookshelfCli.csproj.AssemblyReference.cache
+F:\aws\ppt\dev\demo\dynamodb\obj\Debug\net5.0\BookshelfCli.GeneratedMSBuildEditorConfig.editorconfig
+F:\aws\ppt\dev\demo\dynamodb\obj\Debug\net5.0\BookshelfCli.AssemblyInfoInputs.cache
+F:\aws\ppt\dev\demo\dynamodb\obj\Debug\net5.0\BookshelfCli.AssemblyInfo.cs
+F:\aws\ppt\dev\demo\dynamodb\obj\Debug\net5.0\BookshelfCli.csproj.CoreCompileInputs.cache

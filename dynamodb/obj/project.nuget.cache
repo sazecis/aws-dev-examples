@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "3KrrskfqvZEQiw3kGglkwNf2TRKUDzRtao12v/08t2Oap1gtHReDrLUfcfvnekJhGJA6mTT9mewi63DuXaCEfQ==",
+  "success": true,
+  "projectFilePath": "F:\\aws\\ppt\\dev\\demo\\dynamodb\\BookshelfCli.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\csaba\\.nuget\\packages\\awssdk.core\\3.7.0\\awssdk.core.3.7.0.nupkg.sha512",
+    "C:\\Users\\csaba\\.nuget\\packages\\awssdk.dynamodbv2\\3.7.0\\awssdk.dynamodbv2.3.7.0.nupkg.sha512",
+    "C:\\Users\\csaba\\.nuget\\packages\\awssdk.securitytoken\\3.7.0\\awssdk.securitytoken.3.7.0.nupkg.sha512",
+    "C:\\Users\\csaba\\.nuget\\packages\\mcmaster.extensions.commandlineutils\\3.1.0\\mcmaster.extensions.commandlineutils.3.1.0.nupkg.sha512",
+    "C:\\Users\\csaba\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
