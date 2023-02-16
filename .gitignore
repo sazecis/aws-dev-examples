@@ -2,7 +2,9 @@
 
 x_old
 
-**/bin/
-**/obj/
+bin
+obj
+
+__pycache__
 
 access_key.json
