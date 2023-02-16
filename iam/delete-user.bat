@@ -3,7 +3,7 @@
 call delete-access-keys.bat %1
 
 for /f "delims=" %%i in ('aws configure get region') do set AWS_REGION=%%i
-set POLICY_NAME=s3-full-access
+set POLICY_NAME=bookshelf-policy
 set USER_NAME=%1
 
 rem Get policy ARN

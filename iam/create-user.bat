@@ -2,13 +2,13 @@
 
 for /f "delims=" %%i in ('aws configure get region') do set AWS_REGION=%%i
 
-set POLICY_NAME=s3-full-access
-set POLICY_DOCUMENT=s3-policy.json
+set POLICY_NAME=bookshelf-policy
+set POLICY_DOCUMENT=bookshelf-policy.json
 set USER_NAME=%1
 set ACCESS_KEY_ID=
 set SECRET_ACCESS_KEY=
 
-rem Create IAM policy with full access to S3
+rem Create IAM policy with full access to S3, DynamoDB, Lambda, API Gateway, and Cognito
 aws iam create-policy --policy-name %POLICY_NAME% --policy-document file://%POLICY_DOCUMENT%
 
 echo Created IAM policy %POLICY_NAME%
@@ -47,4 +47,3 @@ echo AWS CLI credentials configured for user %USER_NAME% using profile %USER_NAM
 
 set ACCESS_KEY_ID=
 set SECRET_ACCESS_KEY=
-

@@ -1,4 +1,8 @@
+.vscode
+
 x_old
 
 **/bin/
 **/obj/
+
+access_key.json

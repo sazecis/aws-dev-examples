@@ -1,0 +1,38 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "S3FullAccess",
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "DynamoDBFullAccess",
+      "Effect": "Allow",
+      "Action": "dynamodb:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "LambdaFullAccess",
+      "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "APIGatewayFullAccess",
+      "Effect": "Allow",
+      "Action": "apigateway:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "CognitoFullAccess",
+      "Effect": "Allow",
+      "Action": [
+        "cognito:*",
+        "cognito-identity:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
