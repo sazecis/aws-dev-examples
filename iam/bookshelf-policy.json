@@ -33,6 +33,44 @@
         "cognito-identity:*"
       ],
       "Resource": "*"
+    },
+    {
+      "Sid": "CloudFormationFullAccess",
+      "Effect": "Allow",
+      "Action": "cloudformation:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowCreateRole",
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetRole",
+        "iam:PassRole",
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:CreateServiceLinkedRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ResourceGroupFullAccess",
+      "Effect": "Allow",
+      "Action": "resource-groups:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "ApplicationInsightsFullAccess",
+      "Effect": "Allow",
+      "Action": "applicationinsights:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "CloudWatchLogsFullAccess",
+      "Effect": "Allow",
+      "Action": "logs:*",
+      "Resource": "*"
     }
   ]
 }

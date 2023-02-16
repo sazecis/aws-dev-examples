@@ -5,6 +5,11 @@ x_old
 bin
 obj
 
+target
+
 __pycache__
 
 access_key.json
+
+samconfig.toml
+.aws-sam
