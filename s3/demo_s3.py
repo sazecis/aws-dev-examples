@@ -1,7 +1,9 @@
 import argparse
+import os
 import boto3
-from botocore.exceptions import NoCredentialsError
 from botocore.exceptions import ClientError
+from boto3.s3.transfer import TransferConfig
+
 
 # Create an S3 client
 s3 = boto3.client('s3')
@@ -26,12 +28,13 @@ delete_parser.add_argument(
 
 # Subparser for uploading a file to a bucket
 upload_parser = subparsers.add_parser(
-    'upload-file', help='Upload a file to an S3 bucket')
-upload_parser.add_argument('file_path', help='The path to the file to upload')
+    'upload-file', help='Upload a file or folder to an S3 bucket')
+upload_parser.add_argument(
+    'file_path', help='The path to the file or folder to upload')
 upload_parser.add_argument(
     'bucket_name', help='The name of the S3 bucket to upload the file to')
 upload_parser.add_argument(
-    '--key', help='The S3 key to use for the uploaded file')
+    '--key', help='The S3 key to use for the uploaded file. Uploading folders will use the name of the files as keys.')
 
 # Subparser for deleting a file from a bucket
 delete_file_parser = subparsers.add_parser(
@@ -51,6 +54,16 @@ url_parser.add_argument(
 url_parser.add_argument(
     '--expiration', help='The expiration time for the URL, in seconds')
 
+# Subparser for configuring a bucket as a website
+web_parser = subparsers.add_parser(
+    'web', help='Configure an S3 bucket as a website')
+web_parser.add_argument(
+    'bucket_name', help='The name of the S3 bucket to configure as a website')
+web_parser.add_argument(
+    'index_document', help='The name of the index document')
+web_parser.add_argument(
+    '--error-document', help='The name of the error document')
+
 args = parser.parse_args()
 
 # Define a function to get the region associated with the AWS profile
@@ -60,7 +73,7 @@ def get_profile_region():
     session = boto3.Session()
     return session.region_name
 
-# Define the main function
+
 def main():
     # Check which subcommand was selected
     if args.subcommand == 'create-bucket':
@@ -80,19 +93,42 @@ def main():
         try:
             s3.delete_bucket(Bucket=args.bucket_name)
             print(f'Bucket {args.bucket_name} deleted successfully')
-        except NoCredentialsError:
-            print('AWS credentials could not be found')
+        except ClientError as e:
+            print(f'Error deleting the bucket: {e}')
+
 
     elif args.subcommand == 'upload-file':
-        # Set the S3 key to use
-        key = args.key or args.file_path.split('/')[-1]
-        # Upload the file
-        try:
-            s3.upload_file(args.file_path, args.bucket_name, key)
-            print(
-                f'File {args.file_path} uploaded successfully to bucket {args.bucket_name} with key {key}')
-        except NoCredentialsError:
-            print('AWS credentials could not be found')
+        path = args.file_path
+        # Determine whether the path is a file or a directory
+        if os.path.isfile(path):
+            # Upload the file
+            try:
+                s3.upload_file(
+                    path,
+                    args.bucket_name,
+                    os.path.basename(path)
+                )
+                print(
+                    f'File {path} uploaded successfully to bucket {args.bucket_name}')
+            except ClientError as e:
+                print(f'Error uploading the file: {e}')
+        elif os.path.isdir(path):
+            # Traverse the directory and upload each file
+            for dirpath, dirnames, filenames in os.walk(path):
+                for filename in filenames:
+                    try:
+                        file_path = os.path.join(dirpath, filename)
+                        s3.upload_file(
+                            file_path,
+                            args.bucket_name,
+                            os.path.relpath(file_path, path)
+                        )
+                        print(
+                            f'File {file_path} uploaded successfully to bucket {args.bucket_name}')
+                    except ClientError as e:
+                        print(f'Error uploading the file: {e}')
+        else:
+            print(f'{path} is not a valid file or directory')
 
     elif args.subcommand == 'delete-file':
         # Delete the file
@@ -100,13 +136,11 @@ def main():
             s3.delete_object(Bucket=args.bucket_name, Key=args.file_key)
             print(
                 f'File {args.file_key} deleted successfully from bucket {args.bucket_name}')
-        except NoCredentialsError:
-            print('AWS credentials could not be found')
-
+        except ClientError as e:
+            print(f'Error deleting the file: {e}')
 
     elif args.subcommand == 'generate-url':
         # Generate a presigned URL
-        print(args.file_key)
         try:
             url = s3.generate_presigned_url(
                 ClientMethod='get_object',
@@ -116,13 +150,12 @@ def main():
             print(
                 f'Presigned URL for file {args.file_key} in bucket {args.bucket_name}:')
             print(url)
-        except NoCredentialsError:
-            print('AWS credentials could not be found')
         except ClientError as e:
             if e.response['Error']['Code'] == 'ExpiredToken':
                 print('Error: AWS token has expired')
             else:
                 print(f'Error: {e}')
+
 
 if __name__ == '__main__':
     main()
