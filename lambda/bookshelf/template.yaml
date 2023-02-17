@@ -28,7 +28,16 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: Bookshelf
+      Events:
+        Bookshelf:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /books
+            Method: get
 Outputs:
+  BookshelfApi:
+    Description: "API Gateway endpoint URL for Prod stage for Bookshelf function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/books/"
   BookshelfFunction:
     Description: "Bookshelf Lambda Function ARN"
     Value: !GetAtt BookshelfFunction.Arn
