@@ -24,8 +24,8 @@ public class UpdateItemCommand
     [Required]
     public string Title { get; set; }
 
-    [Option(Description = "New type of the book", ShortName = "y", LongName = "new-type", ValueName = "NEW_TYPE")]
-    public string NewType { get; set; }
+    [Option(Description = "New category of the book", ShortName = "y", LongName = "new-category", ValueName = "NEW_CATEGORY")]
+    public string NewCategory { get; set; }
 
     [Option(Description = "New description of the book", ShortName = "d", LongName = "new-description", ValueName = "NEW_DESCRIPTION")]
     public string NewDescription { get; set; }
@@ -65,11 +65,11 @@ public class UpdateItemCommand
             var expressionAttributeValues = new Dictionary<string, AttributeValue>();
             var expressionAttributeNames = new Dictionary<string, string>();
 
-            if (!string.IsNullOrEmpty(NewType))
+            if (!string.IsNullOrEmpty(NewCategory))
             {
-                updateExpression += "#y = :newType, ";
-                expressionAttributeValues.Add(":newType", new AttributeValue(NewType));
-                expressionAttributeNames.Add("#y", "type");
+                updateExpression += "#y = :newCategory, ";
+                expressionAttributeValues.Add(":newCategory", new AttributeValue(NewCategory));
+                expressionAttributeNames.Add("#y", "category");
             }
 
             if (!string.IsNullOrEmpty(NewDescription))

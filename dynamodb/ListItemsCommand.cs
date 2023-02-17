@@ -42,7 +42,7 @@ public class ListItemsCommand
             console.WriteLine($"Listing items in the Bookshelf table:");
             foreach (var item in response.Items)
             {
-                console.WriteLine($"- Author: {item["author"].S}, Title: {item["title"].S}, Type: {item["type"].S}, Description: {(item.ContainsKey("description") ? item["description"].S : "")}");
+                console.WriteLine($"- Author: {item["author"].S}, Title: {item["title"].S}, Category: {item["category"].S}, Description: {(item.ContainsKey("description") ? item["description"].S : "")}");
             }
 
             return 0;

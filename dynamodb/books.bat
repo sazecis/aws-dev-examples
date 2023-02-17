@@ -1,0 +1,20 @@
+@echo off
+
+dotnet run -- insert -a "J.R.R. Tolkien" -t "The Lord of the Rings: The Fellowship of the Ring" -y "Fantasy" -d "A classic tale of hobbits, dwarves, and men on a quest to save Middle Earth."
+dotnet run -- insert -a "J.K. Rowling" -t "Harry Potter and the Philosopher's Stone" -y "Fantasy" -d "The first book in the iconic Harry Potter series, introducing the world to the magical Hogwarts School of Witchcraft and Wizardry."
+dotnet run -- insert -a "George R.R. Martin" -t "A Game of Thrones" -y "Fantasy" -d "The first book in the epic Song of Ice and Fire series, which inspired the hit HBO series Game of Thrones."
+dotnet run -- insert -a "C.S. Lewis" -t "The Lion, the Witch and the Wardrobe" -y "Fantasy" -d "The first book in the Chronicles of Narnia series, which follows four siblings on a journey to the magical land of Narnia."
+dotnet run -- insert -a "J.D. Salinger" -t "The Catcher in the Rye" -y "Fiction" -d "A classic novel about teenage angst and rebellion, and a defining work of 20th century American literature."
+dotnet run -- insert -a "Jane Austen" -t "Pride and Prejudice" -y "Romance" -d "A beloved novel of manners and romance set in Regency-era England, which has inspired numerous adaptations and spin-offs."
+dotnet run -- insert -a "Gabriel Garcia Marquez" -t "One Hundred Years of Solitude" -y "Magical Realism" -d "A seminal work of magical realism, tracing the lives of seven generations of the Buendia family in the fictional town of Macondo."
+dotnet run -- insert -a "F. Scott Fitzgerald" -t "The Great Gatsby" -y "Fiction" -d "A classic novel of love, obsession, and excess set in the Roaring Twenties, which has been adapted into multiple films and stage productions."
+dotnet run -- insert -a "Harper Lee" -t "To Kill a Mockingbird" -y "Fiction" -d "A Pulitzer Prize-winning novel set in Depression-era Alabama, which explores themes of race, justice, and morality through the eyes of a young girl."
+dotnet run -- insert -a "Leo Tolstoy" -t "War and Peace" -y "Historical Fiction" -d "A monumental work of historical fiction, spanning the period of Napoleon's invasion of Russia and exploring themes of love, war, and the human condition."
+dotnet run -- insert -a "Charles Dickens" -t "Great Expectations" -y "Fiction" -d "A coming-of-age novel about a young orphan's journey to becoming a gentleman, which features some of Dickens' most memorable characters and settings."
+dotnet run -- insert -a "Mark Twain" -t "The Adventures of Huckleberry Finn" -y "Fiction" -d "A classic American novel about a young boy and his runaway slave friend on a journey down the Mississippi River, which has been the subject of much controversy and debate."
+dotnet run -- insert -a "William Shakespeare" -t "Hamlet" -y "Drama" -d "One of the most famous plays in the English language, exploring themes of revenge, madness
+dotnet run -- insert -a "Isaac Asimov" -t "Foundation" -y "Science Fiction" -d "A classic series of science fiction novels, exploring the future of humanity as it spreads throughout the galaxy."
+dotnet run -- insert -a "Orson Scott Card" -t "Ender's Game" -y "Science Fiction" -d "A classic science fiction novel about a young boy who is recruited to train for a war against an alien race."
+dotnet run -- insert -a "George Orwell" -t "1984" -y "Dystopian Fiction" -d "A classic dystopian novel set in a future society where the government has total control over the lives of its citizens."
+dotnet run -- insert -a "Aldous Huxley" -t "Brave New World" -y "Dystopian Fiction" -d "A dystopian novel set in a future society where people are genetically engineered and controlled through drugs and conditioning."
+dotnet run -- insert -a "Ray Bradbury" -t "Fahrenheit 451" -y "Dystopian Fiction" -d "A dystopian novel set in a future society where books are banned and burned, and critical thinking is discouraged."

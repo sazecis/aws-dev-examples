@@ -1,28 +1,55 @@
 package bookshelf;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import java.util.List;
 import java.util.Map;
 
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.model.Page;
+import software.amazon.awssdk.enhanced.dynamodb.model.PageIterable;
+import software.amazon.awssdk.enhanced.dynamodb.model.ScanEnhancedRequest;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+
 public class App implements RequestHandler<Map<String, String>, String> {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    private static final DynamoDbTable<Bookshelf> bookshelfTable;
+    private static final ObjectMapper objectMapper;
+
+    static {
+        String region = System.getenv("AWS_REGION");
+        DynamoDbClient ddbClient = DynamoDbClient.builder()
+                .region(Region.of(
+                        region))
+                .build();
+        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(ddbClient)
+                .build();
+        bookshelfTable = enhancedClient.table("Bookshelf", Bookshelf.getTableSchema());
+        objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
     @Override
-    public String handleRequest(Map<String, String> event, Context context) {
-        System.out.println(event);
-        LambdaLogger logger = context.getLogger();
-        String response = "200 OK";
-        // log execution details
-        logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
-        logger.log("CONTEXT: " + gson.toJson(context));
-        // process event
-        logger.log("EVENT: " + gson.toJson(event));
-        logger.log("EVENT TYPE: " + event.getClass());
-        return response;
+    public String handleRequest(Map<String, String> input, Context context) {
+        try {
+            ScanEnhancedRequest request = ScanEnhancedRequest.builder().build();
+            PageIterable<Bookshelf> response = bookshelfTable.scan(request);
+            String jsonOutput = "";
+            for (Page<Bookshelf> page : response) {
+                List<Bookshelf> bookshelfItems = page.items();
+                for (Bookshelf item : bookshelfItems) {
+                    jsonOutput += objectMapper.writeValueAsString(item);
+                }
+            }
+            return jsonOutput;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

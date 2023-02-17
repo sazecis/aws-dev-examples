@@ -53,7 +53,7 @@ public class QueryAuthorCommand
             console.WriteLine($"Books by {Author}:");
             foreach (var item in result.Items)
             {
-                console.WriteLine("- Title: {0}, Type: {1}, Description: {2}", item["title"].S, item["type"].S, item.ContainsKey("description") ? item["description"].S : "");
+                console.WriteLine("- Title: {0}, Category: {1}, Description: {2}", item["title"].S, item["category"].S, item.ContainsKey("description") ? item["description"].S : "");
             }
 
             return 0;

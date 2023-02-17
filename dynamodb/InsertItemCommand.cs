@@ -24,9 +24,9 @@ public class InsertItemCommand
     [Required]
     public string Title { get; set; }
 
-    [Option(Description = "Type of the book", ShortName = "y", LongName = "type", ValueName = "TYPE")]
+    [Option(Description = "Category of the book", ShortName = "y", LongName = "category", ValueName = "CATEGORY")]
     [Required]
-    public string Type { get; set; }
+    public string Category { get; set; }
 
     [Option(Description = "Description of the book", ShortName = "d", LongName = "description", ValueName = "DESCRIPTION")]
     public string Description { get; set; }
@@ -56,7 +56,7 @@ public class InsertItemCommand
                 {
                     { "author", new AttributeValue(Author) },
                     { "title", new AttributeValue(Title) },
-                    { "type", new AttributeValue(Type) }
+                    { "category", new AttributeValue(Category) }
                 }
             };
 
