@@ -14,10 +14,34 @@ Globals:
 Parameters:
   BookshelfUserPoolArn:
     Type: String
+    Default: "None"
+
+Conditions:
+  WithApi: !Not [!Equals [!Ref BookshelfUserPoolArn, "None"]]
+  NoApi: !Equals [!Ref BookshelfUserPoolArn, "None"]
 
 Resources:
-  BookshelfFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  BookshelfNoApiFunction:
+    Condition: NoApi
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: BookshelfFunction
+      Handler: bookshelf.App::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          PARAM1: VALUE
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: Bookshelf
+
+  BookshelfWithApiFunction:
+    Condition: WithApi
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: BookshelfFunction
       Handler: bookshelf.App::handleRequest
@@ -39,8 +63,10 @@ Resources:
             Path: /books
             Method: get
             RestApiId: !Ref BookshelfApi
+
   BookshelfApi:
     Type: AWS::Serverless::Api
+    Condition: WithApi
     Properties:
       StageName: Prod
       Cors:
@@ -55,11 +81,22 @@ Resources:
 
 Outputs:
   BookshelfApi:
+    Condition: WithApi
     Description: "API Gateway endpoint URL for Prod stage for Bookshelf function"
     Value: !Sub "https://${BookshelfApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/books/"
-  BookshelfFunction:
+  BookshelfWithApiFunction:
+    Condition: WithApi
     Description: "Bookshelf Lambda Function ARN"
-    Value: !GetAtt BookshelfFunction.Arn
-  BookshelfFunctionIamRole:
+    Value: !GetAtt BookshelfWithApiFunction.Arn
+  BookshelfWithApiFunctionIamRole:
+    Condition: WithApi
     Description: "Implicit IAM Role created for Bookshelf function"
-    Value: !GetAtt BookshelfFunctionRole.Arn
+    Value: !GetAtt BookshelfWithApiFunctionRole.Arn
+  BookshelfNoApiFunction:
+    Condition: NoApi
+    Description: "Bookshelf Lambda Function ARN"
+    Value: !GetAtt BookshelfNoApiFunction.Arn
+  BookshelfNoApiFunctionIamRole:
+    Condition: NoApi
+    Description: "Implicit IAM Role created for Bookshelf function"
+    Value: !GetAtt BookshelfNoApiFunctionRole.Arn
