@@ -30,7 +30,10 @@
       "Effect": "Allow",
       "Action": [
         "cognito:*",
-        "cognito-identity:*"
+        "cognito-identity:*",
+        "cognito-idp:ListUserPools",
+        "cognito-idp:ListUserPoolClients",
+        "cognito-idp:AdminConfirmSignUp"
       ],
       "Resource": "*"
     },
@@ -71,6 +74,12 @@
       "Sid": "CloudWatchLogsFullAccess",
       "Effect": "Allow",
       "Action": "logs:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "SsmGetParameter",
+      "Effect": "Allow",
+      "Action": "ssm:GetParameter",
       "Resource": "*"
     }
   ]

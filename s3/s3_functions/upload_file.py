@@ -35,17 +35,28 @@ def upload_file(s3, file_path, bucket_name, key=None):
         for dirpath, dirnames, filenames in os.walk(file_path):
             for filename in filenames:
                 try:
+                    _, extension = os.path.splitext(filename)
+                    if extension == '.css':
+                        content_type = {'ContentType': 'text/css'}
+                    else:
+                        content_type = {'ContentType': 'text/html'}
                     file_path = os.path.join(dirpath, filename)
+                    dir_path = '/'.join(dirpath.split('\\')[1:])
+                    if dir_path:
+                        s3_file_path = '/'.join([dir_path, filename])
+                    else:
+                        s3_file_path = filename
                     s3.upload_file(
                         file_path,
                         bucket_name,
-                        filename,
-                        ExtraArgs={'ContentType': 'text/html'}
+                        s3_file_path,
+                        ExtraArgs=content_type
                     )
 
-                    s3.put_object_acl(ACL='public-read', Bucket=bucket_name, Key=filename)
+                    s3.put_object_acl(ACL='public-read',
+                                      Bucket=bucket_name, Key=s3_file_path)
                     print(
-                        f'File {file_path} uploaded successfully to bucket {bucket_name}')
+                        f'File {file_path} uploaded successfully to bucket {bucket_name} with key: {s3_file_path}')
                 except ClientError as e:
                     print(f'Error uploading the file: {e}')
     else:

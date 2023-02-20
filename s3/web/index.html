@@ -2,64 +2,79 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Bookshelf App</title>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    <title>Login Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css?v=1">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.656.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js/dist/amazon-cognito-identity.min.js"></script>
+    <script>
 
-        h1 {
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            background-color: #336699;
-            color: white;
-        }
+        function authenticateUser() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+            var authenticationData = {
+                Username: username,
+                Password: password,
+            };
 
-        th,
-        td {
-            text-align: left;
-            padding: 8px;
-        }
+            var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+            var poolData = {
+                UserPoolId: 'eu-central-1_R9eX2IGsJ',
+                ClientId: '7f4ep0705v9fc35s7uolo0aj3t',
+            };
+            var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+            var userData = {
+                Username: username,
+                Pool: userPool,
+            };
+            var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+            cognitoUser.authenticateUser(authenticationDetails, {
+                onSuccess: function (result) {
+                    console.log('Identity token: ' + result.getIdToken().getJwtToken());
+                    window.location.href = "books.html?token=" + result.getIdToken().getJwtToken()
+                },
+                onFailure: function (err) {
+                    console.error(err);
+                },
+                newPasswordRequired: function (userAttributes, requiredAttributes) {
+                    // User was signed up by an admin and must provide new
+                    // password and required attributes, if any, to complete
+                    // authentication.
 
-        th {
-            background-color: #336699;
-            color: white;
+                    // Set the new password
+                    var newPassword = prompt('New password: ');
+                    cognitoUser.completeNewPasswordChallenge(newPassword, requiredAttributes, {
+                        onSuccess: function (result) {
+                            console.log('Identity token: ' + result.getIdToken().getJwtToken());
+                            window.location.href = "books.html?token=" + result.getIdToken().getJwtToken()
+                        },
+                        onFailure: function (err) {
+                            console.error(err);
+                        }
+                    });
+                }
+            });
         }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        a {
-            color: #336699;
-        }
-
-        a:hover {
-            color: #003366;
-        }
-    </style>
+    </script>
 </head>
 
 <body>
-    <h1>Bookshelf App</h1>
-    <table>
-        <tr>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Description</th>
-        </tr>
-        <!-- Placeholder for book data -->
-    </table>
+    <h1>Login Form</h1>
+    <form>
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" name="username"></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" name="password"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="button" value="Login" onclick="authenticateUser()"></td>
+            </tr>
+        </table>
+    </form>
 </body>
 
 </html>

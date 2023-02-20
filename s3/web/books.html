@@ -1,0 +1,53 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Bookshelf App</title>
+    <link rel="stylesheet" type="text/css" href="style.css?v=1">
+</head>
+
+<body>
+    <h1>Bookshelf App</h1>
+    <table>
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+        <!-- Placeholder for book data -->
+    </table>
+
+    <script>
+        // Get the token parameter from the URL
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const token = urlParams.get('token');
+
+        // Call the API endpoint with the token parameter as the authorization header
+        fetch('https://zw6boym3b9.execute-api.eu-central-1.amazonaws.com/Prod/books/', {
+            headers: {
+                'Authorization': token
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data:', data);
+                // Display the book data in the table
+                const table = document.querySelector('table');
+                data.forEach(book => {
+                    const row = table.insertRow();
+                    const authorCell = row.insertCell();
+                    const titleCell = row.insertCell();
+                    const typeCell = row.insertCell();
+                    const descriptionCell = row.insertCell();
+                    authorCell.innerHTML = book.author;
+                    titleCell.innerHTML = book.title;
+                    typeCell.innerHTML = book.category;
+                    descriptionCell.innerHTML = book.description;
+                });
+            })
+            .catch(error => {
+                // Handle any errors that occur during the fetch
+                console.error('Error fetching book data:', error);
+            });
+    </script>
+</body>

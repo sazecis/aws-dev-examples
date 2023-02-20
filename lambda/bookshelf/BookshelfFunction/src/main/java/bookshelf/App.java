@@ -42,22 +42,25 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, APIGatew
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
+        headers.put("Access-Control-Allow-Origin", "*");
+        headers.put("Access-Control-Allow-Methods", "OPTIONS,GET");
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
         try {
             ScanEnhancedRequest request = ScanEnhancedRequest.builder().build();
             PageIterable<Bookshelf> dynamoDbResponse = bookshelfTable.scan(request);
-            String jsonOutput = "";
+            String jsonOutput = "[";
             for (Page<Bookshelf> page : dynamoDbResponse) {
                 List<Bookshelf> bookshelfItems = page.items();
                 for (Bookshelf item : bookshelfItems) {
-                    jsonOutput += objectMapper.writeValueAsString(item);
+                    jsonOutput += objectMapper.writeValueAsString(item) + ", ";
                 }
             }
+            jsonOutput = jsonOutput.substring(0, jsonOutput.length() - 2) + "]";
             return response
                     .withStatusCode(200)
-                    .withBody(jsonOutput.toString());
+                    .withBody(jsonOutput);
 
         } catch (Exception e) {
             return response

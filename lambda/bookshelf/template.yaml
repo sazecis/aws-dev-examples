@@ -11,6 +11,10 @@ Globals:
     Timeout: 20
     MemorySize: 128
 
+Parameters:
+  BookshelfUserPoolArn:
+    Type: String
+
 Resources:
   BookshelfFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -21,23 +25,38 @@ Resources:
       Architectures:
         - x86_64
       MemorySize: 512
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
         Variables:
           PARAM1: VALUE
-          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Policies:
         - DynamoDBCrudPolicy:
             TableName: Bookshelf
       Events:
-        Bookshelf:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        BookshelfApiEvent:
+          Type: Api
           Properties:
             Path: /books
             Method: get
+            RestApiId: !Ref BookshelfApi
+  BookshelfApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      Cors:
+        AllowHeaders: "'Content-Type, Authorization, X-Requested-With'"
+        AllowMethods: "'OPTIONS'"
+        AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: BookshelfAuth
+        Authorizers:
+          BookshelfAuth:
+            UserPoolArn: !Ref BookshelfUserPoolArn
+
 Outputs:
   BookshelfApi:
     Description: "API Gateway endpoint URL for Prod stage for Bookshelf function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/books/"
+    Value: !Sub "https://${BookshelfApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/books/"
   BookshelfFunction:
     Description: "Bookshelf Lambda Function ARN"
     Value: !GetAtt BookshelfFunction.Arn
