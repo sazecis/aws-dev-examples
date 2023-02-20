@@ -7,7 +7,7 @@ cd ..
 echo Cognito destroyed
 
 echo Lambda bookshelf stack cleanup started
-aws cloudformation delete-stack --stack-name bookshelf --no-paginate --no-cli-pager --force
+aws cloudformation delete-stack --stack-name bookshelf
 echo Lambda bookshelf stack destroyed
 
 for /f "delims=" %%i in ('aws apigateway get-rest-apis --query "items[?name=='Bookshelf API'].id" --output text') do (
