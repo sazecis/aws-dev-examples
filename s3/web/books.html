@@ -23,7 +23,7 @@
         const token = urlParams.get('token');
 
         // Call the API endpoint with the token parameter as the authorization header
-        fetch('https://zw6boym3b9.execute-api.eu-central-1.amazonaws.com/Prod/books/', {
+        fetch('<api_gw_url>', {
             headers: {
                 'Authorization': token
             }
