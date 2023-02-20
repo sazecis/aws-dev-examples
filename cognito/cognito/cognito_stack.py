@@ -1,7 +1,8 @@
 from aws_cdk import (
     Stack,
     aws_cognito,
-    CfnOutput
+    CfnOutput,
+    RemovalPolicy
 )
 from constructs import Construct
 
@@ -20,7 +21,8 @@ class CognitoStack(Stack):
                 require_uppercase=False,
                 require_digits=False,
                 require_symbols=False
-            )
+            ),
+            removal_policy=RemovalPolicy.DESTROY
         )
 
         user_pool.add_client(
