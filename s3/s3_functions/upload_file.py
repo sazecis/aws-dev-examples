@@ -4,7 +4,7 @@ from botocore.exceptions import ClientError
 from boto3.s3.transfer import TransferConfig
 
 
-def upload_file(s3, file_path, bucket_name, key=None):
+def upload_file(s3, file_path, bucket_name, key=None, public=False):
     """
     Uploads a file or folder to an S3 bucket.
 
@@ -12,6 +12,7 @@ def upload_file(s3, file_path, bucket_name, key=None):
     :param file_path: The path to the file or folder to upload.
     :param bucket_name: The name of the S3 bucket to upload the file to.
     :param key: The S3 key to use for the uploaded file. Uploading folders will use the name of the files as keys.
+    :param public: Make the uploaded public with ACL.
     """
     # Determine whether the path is a file or a directory
     if os.path.isfile(file_path):
@@ -23,9 +24,10 @@ def upload_file(s3, file_path, bucket_name, key=None):
                 key or os.path.basename(file_path),
                 ExtraArgs={'ContentType': 'text/html'}
             )
-            # Make the object publicly accessible
-            s3.put_object_acl(ACL='public-read', 
-                Bucket=bucket_name, Key=key or os.path.basename(file_path))
+            if public:
+                # Make the object publicly accessible
+                s3.put_object_acl(ACL='public-read', 
+                    Bucket=bucket_name, Key=key or os.path.basename(file_path))
             print(
                 f'File {file_path} uploaded successfully to bucket {bucket_name}')
         except ClientError as e:

@@ -25,7 +25,7 @@ def main():
             s3, args.bucket_name, region=(args.region or get_profile_region()), is_public=args.public),
         'delete-bucket': lambda: delete_bucket(s3, args.bucket_name),
         'upload-file': lambda: upload_file(
-            s3, args.file_path, args.bucket_name, args.key),
+            s3, args.file_path, args.bucket_name, args.key, args.public),
         'delete-file': lambda: delete_file(s3, args.file_key, args.bucket_name),
         'generate-url': lambda: generate_url(
             s3, args.file_key, args.bucket_name, args.expiration),

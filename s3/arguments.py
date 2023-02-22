@@ -31,6 +31,8 @@ def parse_args():
         'bucket_name', help='The name of the S3 bucket to upload the file to')
     upload_parser.add_argument(
         '--key', help='The S3 key to use for the uploaded file. Uploading folders will use the name of the files as keys.')
+    upload_parser.add_argument(
+        '--public', action='store_true', help='Make the uploaded public with ACL.')
 
     # Subparser for deleting a file from a bucket
     delete_file_parser = subparsers.add_parser(
