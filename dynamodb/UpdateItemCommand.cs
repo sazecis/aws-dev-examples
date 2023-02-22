@@ -55,7 +55,7 @@ public class UpdateItemCommand
             };
 
             var existingItem = await client.GetItemAsync("Bookshelf", itemKey);
-            if (existingItem.Item == null)
+            if (existingItem.Item.Values.Count == 0)
             {
                 console.Error.WriteLine($"Item with author '{Author}' and title '{Title}' not found in the Bookshelf table.");
                 return 1;
