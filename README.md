@@ -36,16 +36,6 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## Cognito
 
-- [Creating and managing Cognito user pools with `AWS CDK`](/cognito/pool.md)
+- [Creating and managing Cognito user pools with `AWS CDK`](/cognito/cognito.md)
 
 ## Lambda, API Gateway and Cognito built together <a name="lambda-apigw-cognito"></a>
-
-## StepFunctions
-
-- [Creating and managing StepFunctions workflows](/stepfunctions/workflow.md)
-- [Using StepFunctions with Lambda functions](/stepfunctions/lambda.md)
-
-## CodePipeline
-
-- [Creating and managing CodePipeline pipelines](/codepipeline/pipeline.md)
-- [Automating deployments with CodePipeline](/codepipeline/deployment.md)
