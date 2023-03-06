@@ -24,11 +24,11 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## 3. DynamoDB
 
-- [Creating and managing DynamoDB tables with `.NET`](/dynamodb/dynamodb.md)
+- [Creating and managing DynamoDB tables with `.NET SDK`](/dynamodb/dynamodb.md)
 
 ## 4. Lambda
 
-- [Creating and deploying Lambda functions with `SAM` and `Java`](/lambda/lambda.md)
+- [Creating and deploying Lambda functions with `SAM` and `Java SDK`](/lambda/lambda.md)
 
 ## 5. API Gateway
 
