@@ -29,3 +29,10 @@ To deploy the UserPool execute the deploy command in the `cognito` directory:
 cdk deploy
 ```
 
+## Output <a name="user-pool-arn"></a>
+
+After successful deployment the CDK will produce an output values which should be noted down for later usage.
+```
+Outputs:
+CognitoStack.UserPoolArn = arn:aws:cognito-idp:<region>:<accountid>:userpool/<region>_<generatedtext>
+```
