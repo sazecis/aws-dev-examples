@@ -16,7 +16,7 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## 1. IAM
 
-- [Managing users using AWS CLI and Windows Batch](/iam/iam.md)
+- [Managing users using AWS CLI and `Windows Batch`](/iam/iam.md)
 
 ## 2. S3
 
@@ -24,15 +24,15 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## DynamoDB
 
-- [Creating and managing DynamoDB tables](/dynamodb/dynamodb.md)
+- [Creating and managing DynamoDB tables with `.NET`](/dynamodb/dynamodb.md)
 
 ## Lambda
 
-- [Creating and deploying Lambda functions](/lambda/lambda.md)
+- [Creating and deploying Lambda functions with `SAM` and `Java`](/lambda/lambda.md)
 
 ## API Gateway
 
-- [Creating and managing API Gateway endpoints](/api-gateway/endpoint.md)
+- [Managing API Gateway endpoints with `Swagger UI`](/apigw/apigw.md)
 
 ## Cognito
 
