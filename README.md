@@ -36,8 +36,7 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## Cognito
 
-- [Creating and managing Cognito user pools](/cognito/pool.md)
-- [Integrating Cognito with API Gateway](/cognito/api-gateway.md)
+- [Creating and managing Cognito user pools with `AWS CDK`](/cognito/pool.md)
 
 ## Lambda, API Gateway and Cognito built together <a name="lambda-apigw-cognito"></a>
 

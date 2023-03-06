@@ -1,6 +1,7 @@
 # Creating and deploying Lambda functions
 
 BookshelfFunction is an AWS Lambda function written in Java 11 that reads a list of books from the Bookshelf DynamoDB table. The function is designed to be used in conjunction with other services, such as an API Gateway, but during development and testing, the function can be executed from the AWS Management Console using the "Test" button. The function queries the Bookshelf table in DynamoDB for all books by a specified author, and returns the list of books as a JSON object. This Lambda function is a key component of the Bookshelf application, allowing users to view and search for books in the Bookshelf table.
+The deployment of this Lambda function is done with `AWS Serverless Application Model` (SAM). `SAM` is a framework for building serverless applications using AWS `CloudFormation`. SAM extends CloudFormation to provide a simplified way of defining the Amazon API Gateway APIs, AWS Lambda functions, and Amazon DynamoDB tables needed by your serverless application.
 
 ## Prerequisites
 
