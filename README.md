@@ -28,18 +28,18 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## Lambda
 
-- [Creating and deploying Lambda functions](/lambda/function.md)
-- [Using Lambda with API Gateway](/lambda/api-gateway.md)
+- [Creating and deploying Lambda functions](/lambda/lambda.md)
 
 ## API Gateway
 
 - [Creating and managing API Gateway endpoints](/api-gateway/endpoint.md)
-- [Securing API Gateway with Cognito](/api-gateway/cognito.md)
 
 ## Cognito
 
 - [Creating and managing Cognito user pools](/cognito/pool.md)
 - [Integrating Cognito with API Gateway](/cognito/api-gateway.md)
+
+## Lambda, API Gateway and Cognito built together <a name="lambda-apigw-cognito"></a>
 
 ## StepFunctions
 

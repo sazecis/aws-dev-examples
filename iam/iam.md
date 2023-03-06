@@ -16,7 +16,7 @@ cd iam
 create-user.bat john.doe
 ```
 
-This will create a new IAM user with the specified username and will also create the credentials needed to access AWS services programatically.
+This will create a new IAM user with the specified username and permissions taken from `bookshelf-policy.json` and will also create the credentials needed to access AWS services programatically.
 The credentials are created and a profile is also created in **.aws** directory of your **User** directory.
 
 ## Deleting a user
