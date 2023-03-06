@@ -43,6 +43,12 @@ This will use the `template.yaml` file to deploy the Lambda. You'll be prompted 
 
 You can then use the Lambda function to interact with the Bookshelf table in DynamoDB. The source code for the Lambda function is located in the `lambda/bookshelf/BookshelfFunction/src/main/java/bookshelf` folder.
 
+## Testing the function
+
+To test an AWS Lambda function in the management console, you can use the Test button in the Lambda function's detail page. This will allow you to create a test event and execute the function with that event. In our case it does not matter what is the content of the test event, we just need to press the Test button which triggers our lambda execution, contacting the Bookshelf DynamoDB table and showing the list of books on the Lambda console.
+
+## More infos
+
 To read more about SAM command check the [README.md](/lambda/bookshelf/README.md)
 
 More about SAM and Lambda will come in [Lambda, API Gateway and Cognito built together](/README.md#lambda-apigw-cognito)
