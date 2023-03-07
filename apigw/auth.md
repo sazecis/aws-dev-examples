@@ -29,8 +29,8 @@ After successful execution you will have a new Lambda function with a connected 
 ------------------------------------------------------------------------------------------
 Outputs                                                                                                                                                                        
 ------------------------------------------------------------------------------------------
-Key                 BookshelfApi     
-Description         API Gateway endpoint URL for Prod stage for Bookshelf function                                                 
+Key                 BookshelfApi
+Description         API Gateway endpoint URL for Prod stage for Bookshelf function
 Value               https://<some_code>.execute-api.eu-central-1.amazonaws.com/Prod/books/
 ```
 Note down the enpoint which you receive at the Value field.
@@ -49,7 +49,7 @@ python up_books_html.py <api_gateway_url>
 ```
 The `api_gateway_url` is the one which you noted down at [Noting down the API endpoint](/apigw/auth.md#api-endpoint)
 
-### Update the index.html
+### Update the HTML files
 
 Go to the `cognito` directory and execute:
 ```
@@ -64,3 +64,20 @@ In the `s3` directory execute the `up_index_html.py`:
 ```
 python up_index_html.py <user_pool_id> <app_client_id>
 ```
+
+Now you have your html files updated, you just need to upload them to the S3 bucket which you created in [Managing S3 buckets and objects with `python SDK`](/s3/s3.md).
+The whole webpage content is located in `/s3/web` folder. You can upload the whole folder with the `demo_s3.py` command:
+```
+python demo_s3.py upload-file web <my-bucket-name> --public
+```
+The bucket is already configured as a static website. The files uploaded are made public using the `--public` option. Your webpage is ready, now you just need to create a user in the cognito user pool. To create the user use the `create-user.bat` in `cognito` folder:
+```
+create_user.bat <user_name> <password>
+```
+>**Note**
+>The `create_user.bat` calls the `get_pools.bat` which runs with the assumptions that there is only one cognito user pool in the account region where you are running this demo. If you have multiple user pools then you can try to update the batch or you can get the `UserPoolId` and `AppClientId` from the AWS Management Console.
+
+## You are ready
+
+You just need to look up the URL of your S3 static website, which can be found on the S3 dasboard: `bucket > properties > Static website hosting` and click on the link.
+This will open the `Bookshelf` website for you where you can log in with the above created user name and see the list of books which you added into the `DynomoDB` table.
