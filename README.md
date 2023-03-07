@@ -40,4 +40,4 @@ The whole application deployment is willingly not done with full automation. Man
 
 ## 7. Lambda, API Gateway and Cognito built together <a name="lambda-apigw-cognito"></a>
 
-- [Use Cognito authorizer to authenticate users using the Bookshelf API Gateway](/apigw/auth.md)
+- [Use Cognito authorizer to authenticate users using the Bookshelf API Gateway - `SAM`](/apigw/auth.md)
