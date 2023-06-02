@@ -1,7 +1,6 @@
 import os
-import boto3
+import json
 from botocore.exceptions import ClientError
-from boto3.s3.transfer import TransferConfig
 
 
 def upload_file(s3, file_path, bucket_name, key=None, public=False):
@@ -12,8 +11,39 @@ def upload_file(s3, file_path, bucket_name, key=None, public=False):
     :param file_path: The path to the file or folder to upload.
     :param bucket_name: The name of the S3 bucket to upload the file to.
     :param key: The S3 key to use for the uploaded file. Uploading folders will use the name of the files as keys.
-    :param public: Make the uploaded public with ACL.
+    :param public: Whether the bucket should be made public.
     """
+    # If the bucket needs to be public
+    if public:
+        try:
+            # Disable Block Public Access settings
+            s3.put_public_access_block(
+                Bucket=bucket_name,
+                PublicAccessBlockConfiguration={
+                    'BlockPublicAcls': False,
+                    'IgnorePublicAcls': False,
+                    'BlockPublicPolicy': False,
+                    'RestrictPublicBuckets': False
+                }
+            )
+
+            # Create bucket policy for public access
+            policy = {
+                "Version": "2012-10-17",
+                "Statement": [{
+                    "Sid": "PublicReadGetObject",
+                    "Effect": "Allow",
+                    "Principal": "*",
+                    "Action": ["s3:GetObject"],
+                    "Resource":["arn:aws:s3:::%s/*" % bucket_name]
+                }]
+            }
+
+            policy = json.dumps(policy)
+            s3.put_bucket_policy(Bucket=bucket_name, Policy=policy)
+        except ClientError as e:
+            print(f'Error changing bucket access settings: {e}')
+
     # Determine whether the path is a file or a directory
     if os.path.isfile(file_path):
         # Upload the file
@@ -24,10 +54,6 @@ def upload_file(s3, file_path, bucket_name, key=None, public=False):
                 key or os.path.basename(file_path),
                 ExtraArgs={'ContentType': 'text/html'}
             )
-            if public:
-                # Make the object publicly accessible
-                s3.put_object_acl(ACL='public-read', 
-                    Bucket=bucket_name, Key=key or os.path.basename(file_path))
             print(
                 f'File {file_path} uploaded successfully to bucket {bucket_name}')
         except ClientError as e:
@@ -55,8 +81,6 @@ def upload_file(s3, file_path, bucket_name, key=None, public=False):
                         ExtraArgs=content_type
                     )
 
-                    s3.put_object_acl(ACL='public-read',
-                                      Bucket=bucket_name, Key=s3_file_path)
                     print(
                         f'File {file_path} uploaded successfully to bucket {bucket_name} with key: {s3_file_path}')
                 except ClientError as e:
