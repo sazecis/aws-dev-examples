@@ -4,11 +4,7 @@ Amazon API Gateway is a fully managed service that makes it easy to create, publ
 
 Swagger is a powerful tool for API development, allowing developers to define APIs in a human-readable format that can be easily shared and understood. API Gateway supports importing Swagger files to create or update REST APIs.
 
-To import a Swagger file into API Gateway using the AWS CLI, use the `create-rest-api` command with the `--body` parameter to specify the path to your Swagger file:
-
-```
-aws apigateway create-rest-api --name "My API" --description "My API description" --body file://apigw/swagger.yaml
-```
+To import a Swagger file into API Gateway using the AWS CLI, use the `create-rest-api` or the AWS Management Console.
 
 This command will create a new REST API in API Gateway using the Swagger definition in the specified YAML file. Note that you must have the `AmazonAPIGatewayFullAccess` permission in your AWS account to run this command.
 

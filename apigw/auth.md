@@ -23,6 +23,9 @@ The User Pool ARN was noted down after the creation with CDK at [Cognito section
 
 After successful execution you will have a new Lambda function with a connected and protected API Gateway endpoint.
 
+>**Note**
+>There is a manual step required to make the whole solution to work. On the Management Console at the API Gateway service in the bookshelf >API at the /books/OPTIONS method at the Method Request the Authorizer must be set to None, must be saved and the whole API needs to be >redeployed.
+
 ### Noting down the API endpoint <a name="api-endpoint"></a>
 
 ```
