@@ -14,7 +14,7 @@ def parse_args():
         'bucket_name', help='The name of the S3 bucket to create')
     create_parser.add_argument('--region', help='The AWS region to use')
     create_parser.add_argument(
-        '--public', action='store_true', help='Set bucket ACL to public-read')
+        '--public', action='store_true', help='Update bucket to public-read')
 
     # Subparser for deleting a bucket
     delete_parser = subparsers.add_parser(
@@ -32,7 +32,7 @@ def parse_args():
     upload_parser.add_argument(
         '--key', help='The S3 key to use for the uploaded file. Uploading folders will use the name of the files as keys.')
     upload_parser.add_argument(
-        '--public', action='store_true', help='Make the uploaded public with ACL.')
+        '--public', action='store_true', help='Make the uploaded content public.')
 
     # Subparser for deleting a file from a bucket
     delete_file_parser = subparsers.add_parser(
